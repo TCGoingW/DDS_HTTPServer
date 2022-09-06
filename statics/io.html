@@ -1,0 +1,24 @@
+<html>
+
+<body>
+  <h2>SOCKET IO TEST</h2>
+  <h3>Price: <span id="price"></span></h3>
+
+  <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"
+    integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
+    crossorigin="anonymous"></script>
+  <script>
+    var socket = io();
+    socket.on('connect', (socket) => {
+      console.log('Ahhhhh!!');
+    });
+    socket.on('price', (price) => {
+      console.log(price);
+      let priceEle = document.getElementById('price');
+      priceEle.innerHTML = price;
+      priceEle.style.color = price < 0 ? 'red' : 'green';
+    });
+  </script>
+</body>
+
+</html>

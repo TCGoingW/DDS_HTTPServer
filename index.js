@@ -6,6 +6,13 @@ dotenv.config();
 const api = require('./routes');
 
 const app = express();
+const http = require('http');
+const server = http.createServer(app);
+
+// socket io
+const socketServer = require('socket.io').Server;
+const io = new socketServer(server);
+
 const port = process.env.PORT;
 
 app.use(express.json());
@@ -23,6 +30,17 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.listen(port, () => {
+// ===== socket io =====
+io.on('connection', socket => {
+  console.log('ahh!');
+});
+
+setInterval(() => {
+  let rand = Math.floor(Math.random() * 1000)-500;
+  io.emit('price', rand);
+}, 1000);
+
+
+server.listen(port, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
-}); 
+});
